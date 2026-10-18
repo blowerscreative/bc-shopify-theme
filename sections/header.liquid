@@ -1,11 +1,11 @@
 <header class="header">
   <div class="wrap header__inner">
-    <a class="brand" href="{{ routes.root_url }}" aria-label="{{ shop.name }} home">
+    <a class="brand" href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }} home">
       {%- if settings.logo != blank -%}
         {{ settings.logo | image_url: width: 300 | image_tag: alt: shop.name }}
       {%- else -%}
         {% render 'mark', size: 22 %}
-        <span class="brand__name">{{ section.settings.wordmark | default: shop.name }}</span>
+        <span class="brand__name">{{ shop.name | escape }}</span>
       {%- endif -%}
     </a>
     <nav aria-label="Main">
@@ -31,7 +31,6 @@
 {
   "name": "Header",
   "settings": [
-    { "type": "text", "id": "wordmark", "label": "Wordmark text", "default": "Blowers Creative" },
     { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" }
   ]
 }

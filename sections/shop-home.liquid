@@ -24,7 +24,7 @@
       <span>Secure Shopify checkout</span>
       <span>Clear pricing, upfront</span>
       {%- if shop.refund_policy != blank -%}<a href="{{ shop.refund_policy.url }}">View our return policy →</a>
-      {%- elsif shop.email != blank -%}<a href="mailto:{{ shop.email | escape }}">Questions? Get in touch →</a>{%- endif -%}
+      {%- elsif pages.contact != blank -%}<a href="{{ pages.contact.url }}">Questions? Get in touch →</a>{%- endif -%}
     </div>
     <div id="shop-products-{{ section.id }}" class="shop-home__anchor"></div>
     <div class="shop-home__top">
