@@ -1,0 +1,10 @@
+<section class="section"><div class="wrap" style="max-width:520px">
+  <div class="eyebrow">Account</div><h1 class="h2">Create an account.</h1>
+  <div class="panel">
+  {%- form 'create_customer' -%}{%- if form.errors -%}<div class="form-msg form-msg--error">{{ form.errors | default_errors }}</div>{%- endif -%}<div class="field"><label for="first_name">First name</label><input id="first_name" type="text" name="customer[first_name]" ></div><div class="field"><label for="last_name">Last name</label><input id="last_name" type="text" name="customer[last_name]" ></div><div class="field"><label for="email">Email</label><input id="email" type="email" name="customer[email]" required></div><div class="field"><label for="password">Password</label><input id="password" type="password" name="customer[password]" required></div>
+    <button class="btn btn--block" type="submit">Create account →</button>
+  {%- endform -%}</div>
+</div></section>
+{% schema %}
+{"name": "Register", "settings": []}
+{% endschema %}

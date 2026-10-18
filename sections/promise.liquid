@@ -1,0 +1,39 @@
+<section class="section{% if section.settings.alt %} section--alt{% endif %}">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        {%- if section.settings.eyebrow != blank -%}<div class="eyebrow">{{ section.settings.eyebrow }}</div>{%- endif -%}
+        <h2>{{ section.settings.heading }}</h2>
+      </div>
+      {%- if section.settings.intro != blank -%}<div class="lede dim">{{ section.settings.intro }}</div>{%- endif -%}
+    </div>
+    <div class="promise" style="--cols: {{ section.blocks.size | at_most: 4 | at_least: 1 }}">
+      {%- for block in section.blocks -%}
+        <div class="promise__item" {{ block.shopify_attributes }}>
+          <span class="promise__num">{{ forloop.index | prepend: '0' }} /</span>
+          <h3>{{ block.settings.title }}</h3>
+          <div class="dim">{{ block.settings.text }}</div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Promise / values",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Our approach" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "How we sell things." },
+    { "type": "richtext", "id": "intro", "label": "Intro", "default": "<p>Our mark is an aperture and a flower. Both work by opening, and so does the company.</p>" },
+    { "type": "checkbox", "id": "alt", "label": "Alternate background", "default": false }
+  ],
+  "blocks": [
+    { "type": "item", "name": "Item", "settings": [
+      { "type": "text", "id": "title", "label": "Title", "default": "Price up front." },
+      { "type": "richtext", "id": "text", "label": "Text", "default": "<p>The number on the page is the number you pay.</p>" }
+    ] }
+  ],
+  "max_blocks": 4,
+  "presets": [{ "name": "Promise / values", "blocks": [{ "type": "item" }, { "type": "item" }, { "type": "item" }] }]
+}
+{% endschema %}

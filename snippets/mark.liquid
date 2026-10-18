@@ -1,0 +1,9 @@
+{%- comment -%} Blowers Creative mark: aperture + flower. Pass size (px). {%- endcomment -%}
+<svg class="mark spin-flower" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="{{ size | default: 20 }}" height="{{ size | default: 20 }}" role="img" aria-label="Blowers Creative mark">
+  <g fill="currentColor">
+    {%- for r in (0..7) -%}
+      <ellipse cx="50" cy="24" rx="7.5" ry="21" transform="rotate({{ r | times: 45 }} 50 50)"/>
+    {%- endfor -%}
+    <circle cx="50" cy="50" r="7"/>
+  </g>
+</svg>

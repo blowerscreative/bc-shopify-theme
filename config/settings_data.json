@@ -1,0 +1,16 @@
+{
+  "current": "Default",
+  "presets": {
+    "Default": {
+      "color_ink": "#0b0c0a",
+      "color_ink_2": "#101210",
+      "color_bone": "#f3efe4",
+      "color_bone_dim": "#b3afa2",
+      "color_amber": "#f2a93c",
+      "color_amber_soft": "#f8c772",
+      "page_width": 1360,
+      "card_second_image": true,
+      "show_vendor": false
+    }
+  }
+}

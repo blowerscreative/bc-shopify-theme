@@ -1,0 +1,29 @@
+<section class="section">
+  <div class="wrap">
+    <div class="eyebrow">Search</div>
+    <h1>{% if search.performed %}Results for <em>“{{ search.terms | escape }}”</em>{% else %}Find something.{% endif %}</h1>
+    <form action="{{ routes.search_url }}" method="get" class="signup" style="margin-bottom:2.5rem">
+      <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="Search the shop" aria-label="Search">
+      <input type="hidden" name="type" value="product">
+      <button type="submit">Search →</button>
+    </form>
+    {%- if search.performed -%}
+      {%- paginate search.results by 24 -%}
+        {%- if search.results_count == 0 -%}
+          <p class="dim">No matches. Try a different word, or <a href="/pages/contact">ask us</a> — we'll tell you straight if we have it.</p>
+        {%- else -%}
+          <div class="grid">
+            {%- for item in search.results -%}
+              {%- if item.object_type == 'product' -%}{% render 'product-card', product: item %}{%- else -%}
+                <a class="card" href="{{ item.url }}"><div class="card__body"><h3 class="card__title">{{ item.title }}</h3></div></a>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      {%- endpaginate -%}
+    {%- endif -%}
+  </div>
+</section>
+{% schema %}
+{ "name": "Search", "settings": [] }
+{% endschema %}

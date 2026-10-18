@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Your {{ gift_card.balance | money }} gift card &ndash; {{ shop.name }}</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;1,9..144,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>:root{--ink:#0b0c0a;--ink-2:#101210;--bone:#f3efe4;--bone-dim:#b3afa2;--amber:#f2a93c;--amber-soft:#f8c772;--on-amber:#0b0c0a;--line:rgba(243,239,228,.12);--serif:"Fraunces",Georgia,serif;--mono:"IBM Plex Mono",monospace;--pad:1.5rem;--max:640px}</style>
+{{ 'base.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'vendor/qrcode.js' | shopify_asset_url }}" defer></script>
+{{ content_for_header }}
+</head><body><main class="section"><div class="wrap center">
+  <div style="color:var(--amber);width:56px;margin:0 auto 1.5rem">{% render 'mark', size: 56 %}</div>
+  <div class="eyebrow">{{ shop.name }} gift card</div>
+  <h1>{{ gift_card.balance | money }}</h1>
+  {%- if gift_card.expired or gift_card.enabled == false -%}<p class="form-msg form-msg--error">This gift card is {% if gift_card.expired %}expired{% else %}disabled{% endif %}.</p>{%- endif -%}
+  <div class="panel" style="margin:2rem 0"><div class="label">Code</div><p style="font-size:1.4rem;letter-spacing:.12em;margin:.5rem 0 0">{{ gift_card.code | format_code }}</p></div>
+  <div id="QrCode" data-identifier="{{ gift_card.qr_identifier }}" style="background:#fff;padding:1rem;display:inline-block"></div>
+  <p style="margin-top:2rem"><a class="btn" href="{{ shop.url }}">Start shopping →</a></p>
+</div></main>
+<script>window.addEventListener('load',function(){var e=document.getElementById('QrCode');if(window.QRCode)new QRCode(e,{text:e.dataset.identifier,width:120,height:120});});</script>
+</body></html>

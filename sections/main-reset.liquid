@@ -1,0 +1,10 @@
+<section class="section"><div class="wrap" style="max-width:520px">
+  <div class="eyebrow">Account</div><h1 class="h2">Reset your password.</h1>
+  <div class="panel">
+  {%- form 'reset_customer_password' -%}{%- if form.errors -%}<div class="form-msg form-msg--error">{{ form.errors | default_errors }}</div>{%- endif -%}<div class="field"><label for="password">New password</label><input id="password" type="password" name="customer[password]" required></div><div class="field"><label for="password_confirmation">Confirm password</label><input id="password_confirmation" type="password" name="customer[password_confirmation]" required></div>
+    <button class="btn btn--block" type="submit">Reset password →</button>
+  {%- endform -%}</div>
+</div></section>
+{% schema %}
+{"name": "Reset password", "settings": []}
+{% endschema %}

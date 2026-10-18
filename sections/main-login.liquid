@@ -1,0 +1,14 @@
+<section class="section"><div class="wrap" style="max-width:520px">
+  <div class="eyebrow">Account</div><h1 class="h2">Log in.</h1>
+  <div class="panel">
+  {%- form 'customer_login' -%}{%- if form.errors -%}<div class="form-msg form-msg--error">{{ form.errors | default_errors }}</div>{%- endif -%}<div class="field"><label for="email">Email</label><input id="email" type="email" name="customer[email]" required autocomplete="email"></div><div class="field"><label for="password">Password</label><input id="password" type="password" name="customer[password]" required autocomplete="current-password"></div>
+    <button class="btn btn--block" type="submit">Log in →</button>
+    <p style="margin-top:1rem;font-size:.85rem"><a href="#recover" onclick="document.getElementById('recover').hidden=false">Forgot password?</a> · <a href="{{ routes.account_register_url }}">Create account</a></p>
+  {%- endform -%}
+  <div id="recover" hidden style="margin-top:2rem;border-top:1px solid var(--line);padding-top:1.5rem">
+  {%- form 'recover_customer_password' -%}{%- if form.errors -%}<div class="form-msg form-msg--error">{{ form.errors | default_errors }}</div>{%- endif -%}{%- if form.posted_successfully? -%}<p class="form-msg form-msg--ok">Check your email for a reset link.</p>{%- endif -%}<div class="field"><label for="recover-email">Email for reset link</label><input id="recover-email" type="email" name="email" required></div><button class="btn btn--ghost btn--block" type="submit">Send reset link</button>
+  {%- endform -%}</div></div>
+</div></section>
+{% schema %}
+{"name": "Login", "settings": []}
+{% endschema %}

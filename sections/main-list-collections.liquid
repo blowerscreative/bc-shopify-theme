@@ -1,0 +1,22 @@
+<section class="section">
+  <div class="wrap">
+    <div class="eyebrow">Shop</div>
+    <h1>Collections</h1>
+    <div class="grid" style="--cols: 3; margin-top: 2rem">
+      {%- for collection in collections -%}
+        {%- unless collection.handle == 'frontpage' -%}
+        <a class="card" href="{{ collection.url }}">
+          <div class="card__media">
+            {%- assign img = collection.featured_image | default: collection.products.first.featured_media -%}
+            {%- if img -%}{{ img | image_url: width: 900 | image_tag: loading: 'lazy', alt: collection.title }}{%- else -%}<div class="card__placeholder">{% render 'mark', size: 80 %}</div>{%- endif -%}
+          </div>
+          <div class="card__body"><h3 class="card__title">{{ collection.title }}</h3><span class="price dim">{{ collection.products_count }}</span></div>
+        </a>
+        {%- endunless -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{% schema %}
+{ "name": "Collections list", "settings": [] }
+{% endschema %}

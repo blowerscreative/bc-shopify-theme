@@ -1,0 +1,81 @@
+{%- liquid
+  assign col = section.settings.collection
+  if col == blank
+    assign col = collections.all
+  endif
+-%}
+<section class="section shop-home">
+  <div class="wrap">
+    <div class="shop-intro">
+      <div>
+        <div class="eyebrow">{{ section.settings.eyebrow | escape }}</div>
+        <h1>{{ section.settings.intro_heading | escape }}</h1>
+        <p class="lede">{{ section.settings.intro_text | escape }}</p>
+        <a class="btn" href="#shop-products-{{ section.id }}">Find your next favorite <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="shop-intro__note">
+        <span aria-hidden="true">{% render 'mark', size: 56 %}</span>
+        <p>From the creative studio.<br><em>To your everyday.</em></p>
+        <span class="label">Blowers Creative · Springfield, MO</span>
+      </div>
+    </div>
+    {% render 'bogo-offer' %}
+    <div class="shop-reassurance" aria-label="Shop with confidence">
+      <span>Secure Shopify checkout</span>
+      <span>Clear pricing, upfront</span>
+      {%- if shop.refund_policy != blank -%}<a href="{{ shop.refund_policy.url }}">View our return policy →</a>
+      {%- elsif shop.email != blank -%}<a href="mailto:{{ shop.email | escape }}">Questions? Get in touch →</a>{%- endif -%}
+    </div>
+    <div id="shop-products-{{ section.id }}" class="shop-home__anchor"></div>
+    <div class="shop-home__top">
+      <h2>{{ section.settings.heading | escape }}</h2>
+      <form action="{{ routes.search_url }}" method="get" class="signup shop-home__search" role="search">
+        <input type="search" name="q" placeholder="Search products" aria-label="Search products">
+        <input type="hidden" name="type" value="product">
+        <button type="submit">Search →</button>
+      </form>
+    </div>
+    {%- if section.settings.show_chips -%}
+      <nav class="chips" aria-label="Collections">
+        <a href="{{ routes.all_products_collection_url }}" class="chip is-active">All</a>
+        {%- for c in collections -%}
+          {%- unless c.handle == 'all' or c.handle == 'frontpage' or c.products_count == 0 -%}
+            <a href="{{ c.url }}" class="chip">{{ c.title }}</a>
+          {%- endunless -%}
+        {%- endfor -%}
+      </nav>
+    {%- endif -%}
+    {%- paginate col.products by section.settings.limit -%}
+      <div class="grid" style="--cols: {{ section.settings.columns }}">
+        {%- for product in col.products -%}
+          {% render 'product-card', product: product %}
+        {%- else -%}
+          {%- for i in (1..4) -%}{% render 'product-card', product: blank %}{%- endfor -%}
+        {%- endfor -%}
+      </div>
+      {%- if paginate.pages > 1 -%}
+        <nav class="pagination">
+          {%- if paginate.previous -%}<a href="{{ paginate.previous.url }}">← Prev</a>{%- endif -%}
+          <span class="current">Page {{ paginate.current_page }} of {{ paginate.pages }}</span>
+          {%- if paginate.next -%}<a href="{{ paginate.next.url }}">Next →</a>{%- endif -%}
+        </nav>
+      {%- endif -%}
+    {%- endpaginate -%}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Shop grid",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Intro eyebrow", "default": "Good design. Everyday goods." },
+    { "type": "text", "id": "intro_heading", "label": "Intro heading", "default": "Make everyday a little more creative." },
+    { "type": "text", "id": "intro_text", "label": "Intro text", "default": "Discover goods from Blowers Creative. Find something for yourself, pick out a gift, and bring a little studio spirit home." },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Find your favorite" },
+    { "type": "collection", "id": "collection", "label": "Collection (defaults to all products)" },
+    { "type": "checkbox", "id": "show_chips", "label": "Show collection filters", "default": true },
+    { "type": "range", "id": "limit", "label": "Products per page", "min": 8, "max": 48, "step": 4, "default": 24 },
+    { "type": "range", "id": "columns", "label": "Columns (desktop)", "min": 2, "max": 5, "step": 1, "default": 4 }
+  ],
+  "presets": [{ "name": "Shop grid" }]
+}
+{% endschema %}

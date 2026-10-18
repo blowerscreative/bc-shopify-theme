@@ -1,0 +1,23 @@
+<section class="section">
+  <div class="wrap narrow">
+    <div class="eyebrow">{{ shop.name }}</div>
+    <h1>{{ page.title }}</h1>
+    <div class="rte">{{ page.content }}</div>
+    {%- if section.settings.show_contact -%}
+      <div class="panel" style="margin-top:2.5rem">
+        <h2 class="h3">Tell us what you need.</h2>
+        {%- form 'contact' -%}
+          {%- if form.posted_successfully? -%}<p class="form-msg form-msg--ok">Thanks — we'll reply with a straight answer.</p>{%- endif -%}
+          {%- if form.errors -%}<div class="form-msg form-msg--error">{{ form.errors | default_errors }}</div>{%- endif -%}
+          <div class="field"><label for="c-name">Name</label><input id="c-name" type="text" name="contact[name]" autocomplete="name"></div>
+          <div class="field"><label for="c-email">Email</label><input id="c-email" type="email" name="contact[email]" required autocomplete="email"></div>
+          <div class="field"><label for="c-body">What do you have in mind?</label><textarea id="c-body" name="contact[body]" rows="4" placeholder="A sentence is enough to start."></textarea></div>
+          <button class="btn" type="submit">Send it →</button>
+        {%- endform -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+{% schema %}
+{ "name": "Page", "settings": [ { "type": "checkbox", "id": "show_contact", "label": "Show contact form", "default": false } ] }
+{% endschema %}

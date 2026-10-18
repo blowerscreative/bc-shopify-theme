@@ -1,0 +1,12 @@
+<section class="section">
+  <div class="wrap center empty">
+    {% render 'mark', size: 56 %}
+    <div class="eyebrow">404</div>
+    <h1>That page <em>isn't here.</em></h1>
+    <p class="lede dim" style="margin:0 auto 2rem">Straight answer: the link is wrong or the item is gone.</p>
+    <a class="btn" href="{{ routes.all_products_collection_url }}">Back to the shop →</a>
+  </div>
+</section>
+{% schema %}
+{ "name": "404", "settings": [] }
+{% endschema %}

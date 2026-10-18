@@ -1,0 +1,20 @@
+<section class="facts">
+  <div class="wrap facts__row">
+    {%- for block in section.blocks -%}
+      <div class="facts__item" {{ block.shopify_attributes }}><span class="facts__k">{{ block.settings.title }}</span> <span class="dim">{{ block.settings.text }}</span></div>
+    {%- endfor -%}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Shopping facts",
+  "blocks": [
+    { "type": "fact", "name": "Fact", "settings": [
+      { "type": "text", "id": "title", "label": "Label", "default": "Shipping" },
+      { "type": "text", "id": "text", "label": "Text", "default": "Cost shown at checkout before you pay." }
+    ] }
+  ],
+  "max_blocks": 4,
+  "presets": [{ "name": "Shopping facts" }]
+}
+{% endschema %}

@@ -1,0 +1,20 @@
+<section class="section"><div class="wrap" style="max-width:760px">
+  <nav class="breadcrumbs"><a href="{{ routes.account_url }}">Account</a> / Addresses</nav>
+  <h1 class="h2">Addresses</h1>
+  {%- paginate customer.addresses by 10 -%}
+  {%- for address in customer.addresses -%}
+    <div class="panel" style="margin-bottom:1rem">{% if address == customer.default_address %}<div class="label">Default</div>{% endif %}{{ address | format_address }}
+      {%- form 'customer_address', address -%}<input type="hidden" name="_method" value="delete"><button class="link-arrow" style="background:none;border:0;cursor:pointer;padding:0" type="submit">Delete</button>{%- endform -%}
+    </div>
+  {%- endfor -%}
+  {%- endpaginate -%}
+  <div class="panel"><h2 class="h3">Add an address</h2>
+  {%- form 'customer_address', customer.new_address -%}{%- if form.errors -%}<div class="form-msg form-msg--error">{{ form.errors | default_errors }}</div>{%- endif -%}<div class="field"><label for="a-first">First name</label><input id="a-first" type="text" name="address[first_name]" ></div><div class="field"><label for="a-last">Last name</label><input id="a-last" type="text" name="address[last_name]" ></div><div class="field"><label for="a-company">Company</label><input id="a-company" type="text" name="address[company]" ></div><div class="field"><label for="a-1">Address</label><input id="a-1" type="text" name="address[address1]" ></div><div class="field"><label for="a-2">Apartment, suite</label><input id="a-2" type="text" name="address[address2]" ></div><div class="field"><label for="a-city">City</label><input id="a-city" type="text" name="address[city]" ></div>
+    <div class="field"><label for="a-country">Country</label><select id="a-country" name="address[country]">{{ all_country_option_tags }}</select></div><div class="field"><label for="a-prov">State / province</label><input id="a-prov" type="text" name="address[province]" ></div><div class="field"><label for="a-zip">ZIP / postal code</label><input id="a-zip" type="text" name="address[zip]" ></div><div class="field"><label for="a-phone">Phone</label><input id="a-phone" type="tel" name="address[phone]" ></div>
+    <label style="display:flex;gap:.5rem;font-size:.85rem;margin-bottom:1rem"><input type="checkbox" name="address[default]" value="1"> Set as default</label>
+    <button class="btn" type="submit">Add address →</button>
+  {%- endform -%}</div>
+</div></section>
+{% schema %}
+{"name": "Addresses", "settings": []}
+{% endschema %}

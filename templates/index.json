@@ -1,0 +1,44 @@
+{
+  "sections": {
+    "shop": {
+      "type": "shop-home",
+      "settings": {}
+    },
+    "facts": {
+      "type": "shop-facts",
+      "settings": {},
+      "blocks": {
+        "f1": {
+          "type": "fact",
+          "settings": {
+            "title": "Price",
+            "text": "What you see is what you pay, before shipping and tax."
+          }
+        },
+        "f2": {
+          "type": "fact",
+          "settings": {
+            "title": "Shipping",
+            "text": "Cost shown at checkout before you pay."
+          }
+        },
+        "f3": {
+          "type": "fact",
+          "settings": {
+            "title": "Questions",
+            "text": "Email us. A person replies."
+          }
+        }
+      },
+      "block_order": [
+        "f1",
+        "f2",
+        "f3"
+      ]
+    }
+  },
+  "order": [
+    "shop",
+    "facts"
+  ]
+}

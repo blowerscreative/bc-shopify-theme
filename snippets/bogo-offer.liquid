@@ -1,0 +1,11 @@
+{%- if settings.bogo_enabled and settings.bogo_tag != blank -%}
+  {%- if product == blank or product.tags contains settings.bogo_tag -%}
+    <aside class="offer" aria-label="Buy one, get one offer">
+      <span class="offer__label">A little more, on us</span>
+      <strong>Buy one. Get one free.</strong>
+      <p>{{ settings.bogo_terms | escape }}</p>
+      {%- if product != blank -%}<a class="link-arrow" href="#qty">Choose your quantity</a>
+      {%- elsif settings.bogo_link != blank -%}<a class="link-arrow" href="{{ settings.bogo_link }}">Shop eligible products</a>{%- endif -%}
+    </aside>
+  {%- endif -%}
+{%- endif -%}

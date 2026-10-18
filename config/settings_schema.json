@@ -1,0 +1,130 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Blowers Straightforward",
+    "theme_version": "1.0.0",
+    "theme_author": "Blowers Creative",
+    "theme_documentation_url": "https://blowerscreative.com",
+    "theme_support_url": "https://blowerscreative.com"
+  },
+  {
+    "name": "Brand colors",
+    "settings": [
+      {
+        "type": "color",
+        "id": "color_ink",
+        "label": "Ink (background)",
+        "default": "#0b0c0a"
+      },
+      {
+        "type": "color",
+        "id": "color_ink_2",
+        "label": "Ink 2 (panels)",
+        "default": "#101210"
+      },
+      {
+        "type": "color",
+        "id": "color_bone",
+        "label": "Bone (text)",
+        "default": "#f3efe4"
+      },
+      {
+        "type": "color",
+        "id": "color_bone_dim",
+        "label": "Bone dim (secondary text)",
+        "default": "#b3afa2"
+      },
+      {
+        "type": "color",
+        "id": "color_amber",
+        "label": "Amber (accent)",
+        "default": "#f2a93c"
+      },
+      {
+        "type": "color",
+        "id": "color_amber_soft",
+        "label": "Amber soft (hover)",
+        "default": "#f8c772"
+      }
+    ]
+  },
+  {
+    "name": "Layout",
+    "settings": [
+      {
+        "type": "range",
+        "id": "page_width",
+        "label": "Page width",
+        "min": 1000,
+        "max": 1600,
+        "step": 20,
+        "unit": "px",
+        "default": 1360
+      }
+    ]
+  },
+  {
+    "name": "Brand assets",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo image (optional \u2014 the aperture mark + wordmark is used by default)"
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon"
+      }
+    ]
+  },
+  {
+    "name": "Product cards",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "card_second_image",
+        "label": "Show second image on hover",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_vendor",
+        "label": "Show vendor",
+        "default": false
+      }
+    ]
+  },
+  {
+    "name": "Buy one, get one",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Before enabling, create an automatic Buy X get Y discount in Shopify Discounts: buy 1 eligible item, get 1 eligible item free. Match the eligible products to the tag below. Customers must add both items. This theme displays the offer; it does not create discounts."
+      },
+      {
+        "type": "checkbox",
+        "id": "bogo_enabled",
+        "label": "Show active BOGO offer",
+        "default": false
+      },
+      {
+        "type": "text",
+        "id": "bogo_tag",
+        "label": "Eligible product tag",
+        "default": "bogo"
+      },
+      {
+        "type": "text",
+        "id": "bogo_terms",
+        "label": "Offer terms",
+        "default": "Add two eligible items to your cart. The lower-priced eligible item is free at checkout. Cannot be combined with other offers."
+      },
+      {
+        "type": "url",
+        "id": "bogo_link",
+        "label": "Eligible collection link"
+      }
+    ]
+  }
+]

@@ -1,0 +1,39 @@
+{%- paginate collection.products by section.settings.per_page -%}
+<section class="section">
+  <div class="wrap">
+    <div class="eyebrow">Collection</div>
+    <h1>{{ collection.title }}</h1>
+    {%- if collection.description != blank -%}<div class="rte lede dim">{{ collection.description }}</div>{%- endif -%}
+    <div class="collection-bar">
+      <span class="dim">{{ collection.products_count }} {{ collection.products_count | pluralize: 'item', 'items' }}</span>
+      <label class="visually-hidden" for="sort">Sort by</label>
+      <select id="sort" onchange="const u=new URL(location.href);u.searchParams.set('sort_by',this.value);location=u">
+        {%- for option in collection.sort_options -%}<option value="{{ option.value }}" {% if option.value == collection.sort_by %}selected{% endif %}>{{ option.name }}</option>{%- endfor -%}
+      </select>
+    </div>
+    {%- if collection.products.size > 0 -%}
+      <div class="grid" style="--cols: {{ section.settings.columns }}">
+        {%- for product in collection.products -%}{% render 'product-card', product: product %}{%- endfor -%}
+      </div>
+    {%- else -%}
+      <div class="empty">{% render 'mark', size: 56 %}<p>Nothing here yet. Check back soon.</p><a class="link-arrow" href="{{ routes.root_url }}">Back home</a></div>
+    {%- endif -%}
+    {%- if paginate.pages > 1 -%}
+      <nav class="pagination">
+        {%- if paginate.previous -%}<a href="{{ paginate.previous.url }}">← Prev</a>{%- endif -%}
+        {%- for part in paginate.parts -%}{%- if part.is_link -%}<a href="{{ part.url }}">{{ part.title }}</a>{%- else -%}<span class="{% if part.title == paginate.current_page %}current{% endif %}">{{ part.title }}</span>{%- endif -%}{%- endfor -%}
+        {%- if paginate.next -%}<a href="{{ paginate.next.url }}">Next →</a>{%- endif -%}
+      </nav>
+    {%- endif -%}
+  </div>
+</section>
+{%- endpaginate -%}
+{% schema %}
+{
+  "name": "Collection",
+  "settings": [
+    { "type": "range", "id": "per_page", "label": "Products per page", "min": 8, "max": 48, "step": 4, "default": 24 },
+    { "type": "range", "id": "columns", "label": "Columns", "min": 2, "max": 5, "step": 1, "default": 4 }
+  ]
+}
+{% endschema %}

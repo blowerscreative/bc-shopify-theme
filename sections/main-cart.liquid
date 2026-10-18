@@ -1,0 +1,62 @@
+<section class="section">
+  <div class="wrap">
+    <div class="eyebrow">Your cart</div>
+    <h1>Here's what you've got.</h1>
+    {%- if cart.item_count > 0 -%}
+      <form action="{{ routes.cart_url }}" method="post" data-cart-form>
+        <table class="cart-table">
+          <thead><tr><th>Item</th><th>Price</th><th>Qty</th><th style="text-align:right">Total</th></tr></thead>
+          <tbody>
+            {%- for item in cart.items -%}
+              <tr>
+                <td>
+                  <div class="cart-item">
+                    {%- if item.image -%}<a href="{{ item.url }}">{{ item.image | image_url: width: 200 | image_tag: alt: item.title }}</a>{%- endif -%}
+                    <div>
+                      <a href="{{ item.url }}" class="card__title" style="text-decoration:none">{{ item.product.title }}</a>
+                      {%- unless item.product.has_only_default_variant -%}<div class="dim" style="font-size:.8rem">{{ item.variant.title }}</div>{%- endunless -%}
+                      {%- for p in item.properties -%}{%- unless p.last == blank or p.first contains '_' -%}<div class="dim" style="font-size:.8rem">{{ p.first }}: {{ p.last }}</div>{%- endunless -%}{%- endfor -%}
+                      <a href="{{ item.url_to_remove }}" class="link-arrow" style="font-size:.65rem">Remove</a>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  {%- if item.original_price > item.final_price -%}<s class="dim">{{ item.original_price | money }}</s> {% endif %}{{ item.final_price | money }}
+                  {%- for discount in item.line_level_discount_allocations -%}<div class="cart-discount">{{ discount.discount_application.title | escape }} (−{{ discount.amount | money }})</div>{%- endfor -%}
+                </td>
+                <td><div class="qty" data-qty><button type="button" data-step="down" aria-label="Decrease">−</button><input type="number" name="updates[]" value="{{ item.quantity }}" min="0" aria-label="Quantity"><button type="button" data-step="up" aria-label="Increase">+</button></div></td>
+                <td style="text-align:right">{{ item.final_line_price | money }}</td>
+              </tr>
+            {%- endfor -%}
+          </tbody>
+        </table>
+        <div class="cart-foot">
+          <div class="cart-summary">
+            {%- if section.settings.show_note -%}
+              <div class="field"><label for="note">Order note</label><textarea id="note" name="note" rows="2">{{ cart.note }}</textarea></div>
+            {%- endif -%}
+            {%- for d in cart.cart_level_discount_applications -%}<div class="row dim"><span>{{ d.title }}</span><span>−{{ d.total_allocated_amount | money }}</span></div>{%- endfor -%}
+            <div class="row total"><span>Subtotal</span><span>{{ cart.total_price | money_with_currency }}</span></div>
+            <p class="dim" style="font-size:.8rem">{{ section.settings.straight_note }}</p>
+            {% render 'bogo-offer' %}
+            <button type="submit" name="checkout" class="btn btn--block">Check out →</button>
+            {% render 'purchase-trust' %}
+            <noscript><button type="submit" name="update" class="btn btn--ghost btn--block" style="margin-top:.6rem">Update cart</button></noscript>
+            <a class="link-arrow" href="{{ routes.all_products_collection_url }}" style="display:block;text-align:center;margin-top:1rem">Keep shopping</a>
+          </div>
+        </div>
+      </form>
+    {%- else -%}
+      <div class="empty">{% render 'mark', size: 56 %}<p class="lede" style="margin:0 auto 1.5rem">Your next favorite is waiting. Explore the shop and make it yours.</p><a class="btn" href="{{ routes.all_products_collection_url }}">Browse the shop →</a></div>
+    {%- endif -%}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Cart",
+  "settings": [
+    { "type": "checkbox", "id": "show_note", "label": "Allow order notes", "default": true },
+    { "type": "text", "id": "straight_note", "label": "Note under subtotal", "default": "Shipping and tax are calculated at checkout — you'll see the full total before you pay." }
+  ]
+}
+{% endschema %}

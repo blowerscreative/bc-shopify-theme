@@ -1,0 +1,14 @@
+<div class="purchase-trust">
+  <p><span aria-hidden="true">↗</span> Secure checkout powered by Shopify</p>
+  <p><span aria-hidden="true">✓</span> Shipping &amp; tax shown before you pay</p>
+  <div class="purchase-trust__links">
+    {%- if shop.shipping_policy != blank -%}<a href="{{ shop.shipping_policy.url }}">Shipping details</a>{%- endif -%}
+    {%- if shop.refund_policy != blank -%}<a href="{{ shop.refund_policy.url }}">Returns &amp; refunds</a>{%- endif -%}
+    {%- if shop.email != blank -%}<a href="mailto:{{ shop.email | escape }}">Ask a question</a>{%- endif -%}
+  </div>
+  {%- if shop.enabled_payment_types.size > 0 -%}
+    <ul class="payment-icons" role="list" aria-label="Accepted payment methods">
+      {%- for type in shop.enabled_payment_types -%}<li>{{ type | payment_type_svg_tag: class: 'payment-icon' }}</li>{%- endfor -%}
+    </ul>
+  {%- endif -%}
+</div>

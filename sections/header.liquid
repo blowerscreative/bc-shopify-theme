@@ -1,0 +1,38 @@
+<header class="header">
+  <div class="wrap header__inner">
+    <a class="brand" href="{{ routes.root_url }}" aria-label="{{ shop.name }} home">
+      {%- if settings.logo != blank -%}
+        {{ settings.logo | image_url: width: 300 | image_tag: alt: shop.name }}
+      {%- else -%}
+        {% render 'mark', size: 22 %}
+        <span class="brand__name">{{ section.settings.wordmark | default: shop.name }}</span>
+      {%- endif -%}
+    </a>
+    <nav aria-label="Main">
+      <ul class="nav">
+        {%- for link in section.settings.menu.links -%}
+          <li><a href="{{ link.url }}" {% if link.current %}aria-current="page"{% endif %}>{{ link.title }}</a></li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+    <div class="header__tools">
+      <a href="{{ routes.search_url }}" class="hide-sm">Search</a>
+      {%- if shop.customer_accounts_enabled -%}
+        <a href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}" class="hide-sm">Account</a>
+      {%- endif -%}
+      <a href="{{ routes.cart_url }}" class="cart-link">Cart ({{ cart.item_count }})</a>
+      <button class="menu-toggle" aria-label="Menu" aria-expanded="false">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    { "type": "text", "id": "wordmark", "label": "Wordmark text", "default": "Blowers Creative" },
+    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" }
+  ]
+}
+{% endschema %}

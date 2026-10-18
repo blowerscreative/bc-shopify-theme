@@ -1,0 +1,27 @@
+<a class="card" href="{{ product.url | default: '#' }}">
+  {%- if product.available == false and product.id -%}
+    <span class="badge badge--muted">Sold out</span>
+  {%- elsif settings.bogo_enabled and settings.bogo_tag != blank and product.tags contains settings.bogo_tag -%}
+    <span class="badge">Buy one, get one free</span>
+  {%- elsif product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price -%}
+    <span class="badge">Save {{ product.selected_or_first_available_variant.compare_at_price | minus: product.selected_or_first_available_variant.price | money }}</span>
+  {%- endif -%}
+  <div class="card__media">
+    {%- if product.featured_media -%}
+      {{ product.featured_media | image_url: width: 900 | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 25vw, 50vw', widths: '360, 540, 720, 900', alt: product.featured_media.alt | default: product.title }}
+      {%- if settings.card_second_image and product.media[1] -%}
+        {{ product.media[1] | image_url: width: 900 | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 25vw, 50vw', widths: '360, 540, 720, 900', alt: '' }}
+      {%- endif -%}
+    {%- else -%}
+      <div class="card__placeholder">{% render 'mark', size: 80 %}</div>
+    {%- endif -%}
+  </div>
+  <div class="card__body">
+    <div>
+      {%- if settings.show_vendor -%}<div class="label">{{ product.vendor }}</div>{%- endif -%}
+      <h3 class="card__title">{{ product.title | default: 'Product name' }}</h3>
+    </div>
+    {%- if product.id -%}{% render 'price', product: product, from: true %}{%- else -%}<span class="price">$0.00</span>{%- endif -%}
+  </div>
+  {%- if product.id -%}<span class="card__action">{% if product.available %}Choose options{% else %}View product{% endif %} <span aria-hidden="true">↗</span></span>{%- endif -%}
+</a>
